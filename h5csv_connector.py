@@ -1,4 +1,3 @@
-
 ## imports
 from os import walk, path
 from utils import hdf5_getters
@@ -8,7 +7,6 @@ import os
 def recursive_file_search(rootDir, songs):
     for lists in os.listdir(rootDir):
         path = os.path.join(rootDir, lists)
-
         if os.path.isdir(path):
             recursive_file_search(path, songs)
         else:
@@ -23,7 +21,7 @@ recursive_file_search(mypath, songs)
 print("All songs in specified directory appended")
 
 with open('songs2.csv', 'w') as csvfile:
-    fieldnames = ['track id', 'artist', 'title', 'danceability', 'loudness', 'tempo', 'energy', 'tags', 'release year']
+    fieldnames = ['track id', 'artist', 'title', 'loudness', 'tempo', 'tags', 'release year']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
@@ -36,13 +34,11 @@ with open('songs2.csv', 'w') as csvfile:
 
         title = str(hdf5_getters.get_title(h5), "utf-8")
 
-        danceability = hdf5_getters.get_danceability(h5)
+        loudness = float(hdf5_getters.get_loudness(h5))
 
-        loudness = hdf5_getters.get_loudness(h5)
+        release_year = int(hdf5_getters.get_year(h5))
 
-        release_year = hdf5_getters.get_year(h5)
-
-        tempo = hdf5_getters.get_tempo(h5)
+        tempo = float(hdf5_getters.get_tempo(h5))
 
         tags = hdf5_getters.get_artist_mbtags(h5)
         tags = tags.tolist()
@@ -50,18 +46,14 @@ with open('songs2.csv', 'w') as csvfile:
         for tag in tags:
             tags_refined.append(str(tag, "utf-8"))
 
-        energy = hdf5_getters.get_energy(h5)
-
         h5.close()
 
         writer.writerow({'track id': track_id,
                         'artist': artist,
                         'title': title,
-                        'danceability': danceability,
                         'loudness': loudness,
                         'release year': release_year,
                         'tempo': tempo,
-                        'energy': energy,
                         'tags': tags_refined
                         })
 
