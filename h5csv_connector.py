@@ -13,14 +13,14 @@ def recursive_file_search(rootDir, songs):
             songs.append(str(path))
 
 
-mypath="/Users/torberglind/Data-sets/MillionSongSubset/data/a/A/B/"
+mypath="/home/ubuntu/A.tar.gz/A/MillionSongSubset/data/"
 
 songs = []
 recursive_file_search(mypath, songs)
 
 print("All songs in specified directory appended")
 
-with open('songs2.csv', 'w') as csvfile:
+with open('songs.csv', 'w') as csvfile:
     fieldnames = ['track id', 'artist', 'title', 'loudness', 'tempo', 'tags', 'release year']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
