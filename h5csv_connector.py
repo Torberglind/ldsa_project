@@ -13,16 +13,18 @@ def recursive_file_search(rootDir, songs):
         else:
             songs.append(str(path))
 
+
 start = time.clock()
-mypath="/Users/torberglind/Data-sets/MillionSongSubset/data/A/B"
+mypath="/home/ubuntu/data/"
+
 
 songs = []
 recursive_file_search(mypath, songs)
 
 print("All songs in specified directory appended")
 
-with open('songs.csv', 'w') as csvfile:
-    fieldnames = ['track id', 'artist', 'title', 'loudness', 'tempo', 'tags', 'release year']
+with open('songsABC.csv', 'w') as csvfile:
+    fieldnames = ['track id', 'artist', 'title', 'loudness', 'tempo', 'tags', 'release year', 'danceability']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
@@ -48,7 +50,9 @@ with open('songs.csv', 'w') as csvfile:
         release_year = int(hdf5_getters.get_year(h5))
 
         tempo = float(hdf5_getters.get_tempo(h5))
-
+        
+        danceability = float(hdf5_getters.get_danceability(h5))
+        
         tags = hdf5_getters.get_artist_mbtags(h5)
         tags = tags.tolist()
         tags_refined = []
