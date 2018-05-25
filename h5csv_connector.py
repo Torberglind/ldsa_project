@@ -2,6 +2,7 @@
 from os import walk, path
 from utils import hdf5_getters
 import csv
+import time
 
 import os
 def recursive_file_search(rootDir, songs):
@@ -12,8 +13,8 @@ def recursive_file_search(rootDir, songs):
         else:
             songs.append(str(path))
 
-
-mypath="/home/ubuntu/A.tar.gz/A/MillionSongSubset/data/"
+start = time.clock()
+mypath="/Users/torberglind/Data-sets/MillionSongSubset/data/A/B"
 
 songs = []
 recursive_file_search(mypath, songs)
@@ -25,7 +26,15 @@ with open('songs.csv', 'w') as csvfile:
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
+    num_songs = len(songs)
+    perc_i = 0
+
     for song in songs:
+
+        if songs.index(song)*10/num_songs > perc_i:
+            print(str(perc_i*10)+"% done.")
+            perc_i = perc_i + 1
+
         h5 = hdf5_getters.open_h5_file_read(song)
 
         track_id = str(hdf5_getters.get_song_id(h5), "utf-8")
@@ -57,3 +66,6 @@ with open('songs.csv', 'w') as csvfile:
                         'tags': tags_refined
                         })
 
+elapsed = (time.clock() - start)
+print(Execution time:)
+print(elapsed)
