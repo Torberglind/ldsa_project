@@ -17,14 +17,14 @@ def recursive_file_search(rootDir, songs):
 
 
 start = time.clock()
-mypath = ""
+mypath = "/home/ubuntu/data/J"
 
 songs = []
 recursive_file_search(mypath, songs)
 
 print("All songs in specified directory appended")
 
-with open('songsABC.csv', 'a') as csvfile:
+with open('songs_ABC.csv', 'a') as csvfile:
     fieldnames = ['track id', 'artist', 'title', 'loudness', 'tempo', 'tags', 'release year', 'danceability']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
